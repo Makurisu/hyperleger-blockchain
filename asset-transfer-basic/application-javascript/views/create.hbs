@@ -1,0 +1,44 @@
+<style>
+  .login-container {
+    text-align: -webkit-center;
+    width: 100%;
+  }
+
+  label {
+    float: left;
+  }
+  button{
+    margin-top: 20px;
+  }
+</style>
+
+<div class="container login-container">
+  <div class="card" style="width: 30rem;">
+    <div class="card-header">Create Car Form</div>
+    <div class="card-body">
+      <form action="/create" method="post" enctype="multipart/form-data">
+        <div class="mt-3">
+          <label for="id" class="form-label">ID:</label>
+          <input type="text" id="id" name="id" class="form-control" placeholder="Enter ID">
+        </div>
+
+        <div class="mt-3">
+          <label for="carCompany" class="form-label">Car Company:</label>
+          <input type="text" id="carCompany" name="carCompany" class="form-control" placeholder="Enter Car Company">
+        </div>
+
+        <div class="mt-3">
+          <label for="type" class="form-label">Type:</label>
+          <input type="text" id="type" name="type" class="form-control" placeholder="Enter Type">
+        </div>
+
+        <div class="mt-3">
+          <label for="image" class="form-label">Image:</label>
+          <input type="file" id="image" name="image" class="form-control" placeholder="Enter Image">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

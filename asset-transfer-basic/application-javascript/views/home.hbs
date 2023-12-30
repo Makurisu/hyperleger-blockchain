@@ -1,0 +1,88 @@
+<style>
+    a {
+        color: white;
+    }
+
+    a:hover {
+        color: antiquewhite;
+    }
+
+    td {
+        text-align-last: center;
+    }
+</style>
+
+<table id="datatable" class="w-100 dataTable table-responsive table-font"
+    class="table table-bordered table-striped table-hover dataTable table-responsive" style="width: 100%; margin: 10px">
+    <thead>
+        <tr>
+            <th class="text-center">Biển số xe</th>
+            <th class="text-center">Chủ sở hữu</th>
+            <th class="text-center">Hãng xe</th>
+            <th class="text-center">Loại xe</th>
+            <th class="text-center">Image</th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+</table>
+
+<script>
+    $(function () {
+        var dataTB = null;
+        loadTable();
+    });
+
+    function loadTable() {
+        var _table = $("#datatable");
+        dataTB = _table.DataTable({
+            info: true,
+
+            scrollX: false,
+            ordering: true,
+            lengthChange: false,
+            pageLength: 30,
+            scrollCollapse: true,
+            order: [
+                [0, "desc"]
+            ],
+            autoWidth: false,
+            responsive: true,
+            paging: true,
+            searching: false,
+            ajax: {
+                url: "/get-all-assets"
+            },
+            columns: [
+                {
+                    data: "ID",
+                },
+                {
+                    data: 'Owner',
+                },
+                {
+                    data: "carCompany",
+                },
+                {
+                    data: "type",
+                },
+                {
+                    data: 'Image',
+                    render: function (data, type, row) {
+                        return `<button class="btn btn-primary"><a target="_blank" href="http://localhost:8080/ipfs/${data}">Xem hình</a></button>`;
+                    }
+                },
+                {
+                    data: null,
+                    render: function (dât, type, row) {
+                        return `
+                            <button class="btn btn-success"><a href="/history/${row.ID}">Chi tiết</a></button>
+                        `;
+                    }
+                }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+            }
+        });
+    }
+</script>

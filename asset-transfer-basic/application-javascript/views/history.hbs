@@ -1,0 +1,103 @@
+<style>
+    a {
+        color: white;
+    }
+
+    a:hover {
+        color: antiquewhite;
+    }
+
+    td {
+        text-align-last: center;
+    }
+</style>
+
+<table id="datatable" class="w-100 dataTable table-responsive table-font"
+    class="table table-bordered table-striped table-hover dataTable table-responsive" style="width: 100%; margin:">
+    <thead>
+        <tr>
+            <th class="text-center">Mã giao dịch</th>
+            <th class="text-center">Biển số xe</th>
+            <th class="text-center">Chủ sở hữu</th>
+            <th class="text-center">Hãng xe</th>
+            <th class="text-center">Loại xe</th>
+            <th class="text-center">Phương thức</th>
+            <th class="text-center">Thời gian</th>
+            <th class="text-center">Image</th>
+        </tr>
+    </thead>
+</table>
+<script>
+    const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false, // Use 24-hour format
+    };
+
+    var formattedDateTime = new Intl.DateTimeFormat('en-US', options);
+
+    $(function () {
+        var dataTB = null;
+        loadTable();
+    });
+
+    function loadTable() {
+        var _table = $("#datatable");
+        dataTB = _table.DataTable({
+            scrollX: true,
+            ordering: true,
+            lengthChange: false,
+            pageLength: 10,
+            scrollCollapse: true,
+            order: [
+                [0, "desc"]
+            ],
+            autoWidth: true,
+            responsive: true,
+            paging: true,
+            searching: false,
+            ajax: {
+                url: "/detail/{{this.id}}"
+            },
+            columns: [
+                {
+                    data: "txId",
+                },
+                {
+                    data: "ID",
+                },
+                {
+                    data: 'Owner',
+                },
+                {
+                    data: "carCompany",
+                },
+                {
+                    data: "type",
+                },
+                {
+                    data: "Method",
+                },
+                {
+                    data: "Date",
+                    render: function (data, type, row) {
+                        const dateObject = new Date(data);
+                        return `${formattedDateTime.format(dateObject)}`;
+                    }
+                },
+                {
+                    data: 'Image',
+                    render: function (data, type, row) {
+                        return `<button class="btn btn-primary"><a target="_blank" href="http://localhost:8080/ipfs/${data}">Xem hình</a></button>`;
+                    }
+                }
+            ],
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/vi.json'
+            }
+        });
+    }
+</script>
